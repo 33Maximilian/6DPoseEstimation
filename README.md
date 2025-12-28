@@ -91,41 +91,6 @@ README.md
 
 ---
 
-## 代码片段
-
-### 生成掩码
-```python
-from scripts.mask_generator import generate_mask, reset_mask_cache
-
-reset_mask_cache()
-mask = generate_mask(
-    color_rgb,
-    depth,
-    method='yolo_sam',
-    target_class='apple',
-    sam_frame_skip=3,
-    visualize=False,
-)
-```
-
-### 实时循环骨架
-以下示例依赖 FoundationPose 官方仓库中的 `realsense_utils.py`，若未安装请根据自己的相机接入代码替换。
-```python
-from scripts.mask_generator import generate_mask, reset_mask_cache
-from realsense_utils import initialize_camera, get_frames
-
-pipeline, align, K, depth_scale = initialize_camera()
-reset_mask_cache()
-
-while True:
-    color_bgr, depth = get_frames(pipeline, align, depth_scale)
-    color_rgb = cv2.cvtColor(color_bgr, cv2.COLOR_BGR2RGB)
-    mask = generate_mask(color_rgb, depth, method='yolo_sam', target_class='apple', visualize=False)
-    # 将 mask 传给 FoundationPose register/track_one
-```
-
----
-
 ## 数据流
 
 ```
